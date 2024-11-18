@@ -1,3 +1,4 @@
+'use client';
 import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Settings, Search, Maximize } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -74,7 +75,7 @@ const DateFilterPopover = ({ onApplyFilter, currentStartDate, currentEndDate }) 
           <span className='text-sm'>au</span>
           <Input type='date' value={customEndDate.toISOString().split('T')[0]} onChange={(e) => setCustomEndDate(new Date(e.target.value))} />
         </div>
-        <Button className='w-full bg-teal-600 hover:bg-teal-700 text-white' onClick={() => onApplyFilter(customStartDate, customEndDate)}>
+        <Button className='w-full bg-teal-600 hover:bg-teal-600/90 text-white' onClick={() => onApplyFilter(customStartDate, customEndDate)}>
           Appliquer
         </Button>
       </div>
@@ -83,14 +84,14 @@ const DateFilterPopover = ({ onApplyFilter, currentStartDate, currentEndDate }) 
 };
 
 const DynamicCalendar = () => {
-  const [startDate, setStartDate] = useState(new Date('2024-10-14'));
-  const [endDate, setEndDate] = useState(new Date('2024-10-15'));
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date(Date.now() + 24 * 60 * 60 * 1000));
   const [selectedHour, setSelectedHour] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isClosureModalOpen, setIsClosureModalOpen] = useState(false);
   const [selectedResource, setSelectedResource] = useState('Ressource1');
-  const [closureStartDate, setClosureStartDate] = useState(new Date('2024-10-14'));
-  const [closureEndDate, setClosureEndDate] = useState(new Date('2024-10-14'));
+  const [closureStartDate, setClosureStartDate] = useState(new Date());
+  const [closureEndDate, setClosureEndDate] = useState(new Date());
   const [closureReason, setClosureReason] = useState('');
 
   const hours = Array.from({ length: 24 }, (_, i) => i);
@@ -163,7 +164,8 @@ const DynamicCalendar = () => {
   };
 
   const datesInRange = getDatesInRange(startDate, endDate);
-
+  console.log('hours', startDate.getHours());
+  console.log('day', startDate.getDate());
   return (
     <div className='w-full bg-white'>
       {/* Header */}
@@ -188,7 +190,7 @@ const DynamicCalendar = () => {
           </PopoverContent>
         </Popover>
 
-        <Button className='bg-teal-600 hover:bg-teal-700 text-white' onClick={handleClosureModalOpen}>
+        <Button className='bg-teal-600 hover:bg-teal-600/90 text-white' onClick={handleClosureModalOpen}>
           Ajouter des jours de fermeture
         </Button>
 
@@ -247,7 +249,7 @@ const DynamicCalendar = () => {
                 <div key={date.toISOString()} className='flex-1 border-l first:border-l-0'>
                   <div className='flex'>
                     {hours.map((hour) => (
-                      <div key={hour} onClick={() => handleCellClick(date, hour)} className={cn('w-12 h-12 border-r border-b cursor-pointer transition-colors hover:bg-gray-50', date.getDate() === 14 && hour === 14 && 'bg-blue-500')} />
+                      <div key={hour} onClick={() => handleCellClick(date, hour)} className={cn('w-12 h-12 border-r border-b cursor-pointer transition-colors hover:bg-gray-50', date.getDate() === startDate.getDate() && hour === startDate.getHours() && 'bg-blue-500 hover:bg-blue-500')} />
                     ))}
                   </div>
                 </div>
@@ -307,7 +309,7 @@ const DynamicCalendar = () => {
             </div>
           </div>
           <DialogFooter>
-            <Button className='bg-teal-600 hover:bg-teal-700 text-white' onClick={handleClosureModalSubmit}>
+            <Button className='bg-teal-600 hover:bg-teal-600/90 text-white' onClick={handleClosureModalSubmit}>
               Créer des jours de fermeture
             </Button>
 
