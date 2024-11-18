@@ -95,7 +95,7 @@ const DynamicCalendar = () => {
   const [closureReason, setClosureReason] = useState('');
 
   const hours = Array.from({ length: 24 }, (_, i) => i);
-
+  const today = new Date();
   // Fonction pour générer tous les jours entre deux dates
   const getDatesInRange = (start, end) => {
     const dates = [];
@@ -216,12 +216,12 @@ const DynamicCalendar = () => {
         <div className='min-w-max'>
           {/* Headers */}
           <div className='flex'>
-            <div className='w-48 p-4 font-medium text-gray-600'>Ressources</div>
+            <div className='w-48 p-4 font-medium text-gray-600 border-r'>Ressources</div>
             <div className='flex-1'>
               <div className='flex'>
                 {datesInRange.map((date, index) => (
                   <div key={date.toISOString()} className='flex-1 border-l first:border-l-0'>
-                    <div className='text-sm text-gray-600 p-2 text-center border-b'>{formatDate(date)}</div>
+                    <div className='text-sm text-gray-600 p-2 text-center border-b '>{formatDate(date)}</div>
                   </div>
                 ))}
               </div>
@@ -243,13 +243,13 @@ const DynamicCalendar = () => {
 
           {/* Resources Row */}
           <div className='flex border-t'>
-            <div className='w-48 p-4 text-gray-600'>Fatoum20</div>
+            <div className='w-48 p-4 text-gray-600 border-r'>Fatoum20</div>
             <div className='flex flex-1'>
               {datesInRange.map((date) => (
                 <div key={date.toISOString()} className='flex-1 border-l first:border-l-0'>
                   <div className='flex'>
                     {hours.map((hour) => (
-                      <div key={hour} onClick={() => handleCellClick(date, hour)} className={cn('w-12 h-12 border-r border-b cursor-pointer transition-colors hover:bg-gray-50', date.getDate() === startDate.getDate() && hour === startDate.getHours() && 'bg-blue-500 hover:bg-blue-500')} />
+                      <div key={hour} onClick={() => handleCellClick(date, hour)} className={cn('w-12 h-12 border-r border-b cursor-pointer transition-colors hover:bg-gray-50', date.getDate() === today.getDate() && hour === today.getHours() && 'bg-blue-500 hover:bg-blue-500')} />
                     ))}
                   </div>
                 </div>
@@ -280,7 +280,7 @@ const DynamicCalendar = () => {
             <DialogTitle>Ajouter des jours de fermeture</DialogTitle>
           </DialogHeader>
           <div className='p-4 space-y-4'>
-            <span className='text-sm'>Ressource</span>
+            <span className='text-sm '>Ressource</span>
             <Select label='Ressource' value={selectedResource} onChange={(value) => setSelectedResource(value)}>
               <SelectTrigger className='w-[180px]'>
                 <SelectValue placeholder='Sélectionnez une ressource' />
