@@ -192,7 +192,7 @@ const DynamicCalendar = () => {
           Ajouter des jours de fermeture
         </Button>
 
-        <div className='flex items-center gap-4 ml-auto'>
+        {/* <div className='flex items-center gap-4 ml-auto'>
           <Button variant='ghost' size='icon'>
             <Settings className='w-4 h-4' />
           </Button>
@@ -206,7 +206,7 @@ const DynamicCalendar = () => {
           <Button variant='ghost' size='icon'>
             <Maximize className='w-4 h-4' />
           </Button>
-        </div>
+        </div> */}
       </div>
 
       {/* Calendar Grid */}
